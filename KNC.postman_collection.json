@@ -1,0 +1,478 @@
+{
+	"info": {
+		"_postman_id": "bcc80672-016f-4a76-b2c9-46bbcbffb8b0",
+		"name": "KNC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38342470",
+		"_collection_link": "https://ittb55.postman.co/workspace/APIPROJECTBYKNCHOWDHURY~eed45332-3823-4469-bfab-6010a5b35efd/collection/38342470-bcc80672-016f-4a76-b2c9-46bbcbffb8b0?action=share&source=collection_link&creator=38342470"
+	},
+	"item": [
+		{
+			"name": "Get Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request was successful!\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.text();\r",
+							"pm.environment.set(\"studentDetails\", responseBody);\r",
+							"\r",
+							"pm.test(\"Response has the correct Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/xml\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not null\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is in valid XML format\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Perform XML validation here\r",
+							"    // Example: pm.expect(validateXML(responseData)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Environment variable 'studentDetails' is set with the response body\", function () {\r",
+							"    pm.expect(pm.environment.get(\"studentDetails\")).to.eql(pm.response.text());\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains valid student details\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Validate the XML data for student details\r",
+							"    // Example: pm.expect(validateStudentDetails(responseData)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response headers do not expose server information\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Server\")).to.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body does not contain SQL injection vulnerabilities\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Check for SQL injection vulnerabilities in the XML data\r",
+							"    // Example: pm.expect(responseData).to.not.include('SELECT').and.to.not.include('DELETE').and.to.not.include('UPDATE').and.to.not.include('DROP');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not an error message\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Validate that the response body does not indicate an error message\r",
+							"    // Example: pm.expect(responseData).to.not.equal(\"error message\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body does not contain sensitive information\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Check for sensitive information in the XML data\r",
+							"    // Example: pm.expect(responseData).to.not.include('ssn').and.to.not.include('creditCardNumber').and.to.not.include('password');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request was successful and created a new resource!\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"let mydata = pm.response.json()\r",
+							"\r",
+							"pm.environment.set(\"id\", mydata.id)\r",
+							"\r",
+							"pm.environment.set(\"firstname\", mydata.first_name)\r",
+							"\r",
+							"pm.environment.set(\"middlename\", mydata.middle_name)\r",
+							"\r",
+							"pm.environment.set(\"lastname\", mydata.last_name)\r",
+							"\r",
+							"pm.environment.set(\"dob\", mydata.date_of_birth)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"first_name\": \"student\", \r\n\"middle_name\": \"middle\", \r\n\"last_name\": \"last\", \r\n\"date_of_birth\": \"test date\" \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request was successful!\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let mydata = pm.response.json()\r",
+							"\r",
+							"pm.test(\"First name validation\", function () {\r",
+							"\tpm.expect(pm.environment.get(\"firstname\")).to.eql(mydata.data.first_name)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Middle name validation\", function () {\r",
+							"\tpm.expect(pm.environment.get(\"middlename\")).to.eql(mydata.data.middle_name)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Last name validation\", function () {\r",
+							"\tpm.expect(pm.environment.get(\"lastname\")).to.eql(mydata.data.last_name)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date of birth validation\", function () {\r",
+							"\tpm.expect(pm.environment.get(\"dob\")).to.eql(mydata.data.date_of_birth)\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Technical Skills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request was successful!\", function () {\r",
+							"\tpm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"let mydata = pm.response.json()\r",
+							"\r",
+							"pm.environment.set(\"status\", mydata.status)\r",
+							"\r",
+							"pm.environment.set(\"message\", mydata.msg)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"id\": 1, \r\n\"language\": [ \r\n\"Arabic\", \r\n\"German\" \r\n], \r\n\"yearexp\": \"6\", \r\n\"lastused\": \"2024\", \r\n\"st_id\": {{id}} \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/technicalskills",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"technicalskills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student Address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request was successful!\", function () {\r",
+							"\tpm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"let mydata = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Status field validation\", function () {\r",
+							"\tpm.expect(pm.environment.get(\"status\")).to.eql(mydata.status)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message field validation\", function () {\r",
+							"\tpm.expect(pm.environment.get(\"message\")).to.eql(mydata.msg)\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"Permanent_Address\": { \r\n\"House_Number\": \"27\",\r\n\"City\": \"Tangail\",\r\n\"State\": \"Dhaka\", \r\n\"Country\": \"Bangladesh\",\r\n\"PhoneNumber\": [ \r\n{ \r\n\"Std_Code\": \"001\",\r\n\"Home\": \"Home 00001\",\r\n\"Mobile\": \"00000000001\" \r\n},\r\n{ \r\n\"Std_Code\": \"002\",\r\n\"Home\": \"00002\", \r\n\"Mobile\": \"00000000002\" \r\n} \r\n] \r\n},\r\n\"stId\": {{id}} \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/addresses",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FINAL STUDENT DETAIL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let mydata = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Language validation\", function () {\r",
+							"\tpm.expect(\"Arabic\").to.eql(mydata.data.TechnicalDetails[0].language[0])\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Year of experience validation\", function () {\r",
+							"\tpm.expect(\"6\").to.eql(mydata.data.TechnicalDetails[0].yearexp)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"House number validation\", function () {\r",
+							"\tpm.expect(\"27\").to.eql(mydata.data.Address[0].Permanent_Address.House_Number)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"City validation\", function () {\r",
+							"\tpm.expect(\"Tangail\").to.eql(mydata.data.Address[0].Permanent_Address.City)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Country validation\", function () {\r",
+							"\tpm.expect(\"Bangladesh\").to.eql(mydata.data.Address[0].Permanent_Address.Country)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mobile number validation\", function () {\r",
+							"\tpm.expect(\"00000000001\").to.eql(mydata.data.Address[0].Permanent_Address.PhoneNumber[0].Mobile)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Current address validation\", function () {\r",
+							"\tpm.expect(null).to.eql(mydata.data.Address[0].Current_Address)\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/FinalStudentDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"FinalStudentDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request was successful!\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.text();\r",
+							"pm.environment.set(\"studentDetails\", responseBody);\r",
+							"\r",
+							"pm.test(\"Response has the correct Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/xml\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not null\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is in valid XML format\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Perform XML validation here\r",
+							"    // Example: pm.expect(validateXML(responseData)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Environment variable 'studentDetails' is set with the response body\", function () {\r",
+							"    pm.expect(pm.environment.get(\"studentDetails\")).to.eql(pm.response.text());\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains valid student details\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Validate the XML data for student details\r",
+							"    // Example: pm.expect(validateStudentDetails(responseData)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response headers do not expose server information\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Server\")).to.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body does not contain SQL injection vulnerabilities\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Check for SQL injection vulnerabilities in the XML data\r",
+							"    // Example: pm.expect(responseData).to.not.include('SELECT').and.to.not.include('DELETE').and.to.not.include('UPDATE').and.to.not.include('DROP');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not an error message\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Validate that the response body does not indicate an error message\r",
+							"    // Example: pm.expect(responseData).to.not.equal(\"error message\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body does not contain sensitive information\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    // Check for sensitive information in the XML data\r",
+							"    // Example: pm.expect(responseData).to.not.include('ssn').and.to.not.include('creditCardNumber').and.to.not.include('password');\r",
+							"});\r",
+							"var responseJson = xml2Json(pm.response.text()); // Convert XML to JSON\r",
+							"var studentId = responseJson.studentDetails.id;\r",
+							"pm.globals.set(\"studentId\", studentId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
